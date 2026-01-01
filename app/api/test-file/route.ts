@@ -14,12 +14,14 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const size = parseInt(searchParams.get('size') || '20'); // Default 20 MB
   const sizeInBytes = size * 1024 * 1024; // Convert MB to bytes
-  
+
   // Generate test data
   const testData = generateTestData(sizeInBytes);
-  
+
   // Create response with proper headers to prevent caching
-  const response = new NextResponse(testData, {
+  // Create a new Uint8Array to ensure we have a proper ArrayBuffer
+  const arrayBuffer = new Uint8Array(testData).buffer;
+  const response = new NextResponse(arrayBuffer, {
     headers: {
       'Content-Type': 'application/octet-stream',
       'Content-Length': sizeInBytes.toString(),
@@ -29,7 +31,7 @@ export async function GET(request: NextRequest) {
       'Content-Disposition': `attachment; filename="speedtest-${size}mb.bin"`,
     },
   });
-  
+
   return response;
 }
 
