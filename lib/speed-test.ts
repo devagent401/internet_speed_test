@@ -259,7 +259,7 @@ export async function measureUploadSpeed(
   }
   // Return average speed
   const avgSpeed = speeds.reduce((a, b) => a + b, 0) / speeds.length;
-  return Math.round(avgSpeed * 10) / 1000;
+  return Math.round(avgSpeed * 10) / 100;
 }
 
 /**
