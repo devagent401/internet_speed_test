@@ -80,8 +80,7 @@ export async function measureDownloadSpeed(
 
     const startTime = performance.now();
     try {
-      const response = await fetch(
-        `${baseUrl}/api/test-file?size=${fileSize}&nocache=${Date.now()}`,
+      const response = await fetch(`${baseUrl}/api/test-file?size=${fileSize}&nocache=${Date.now()}`,
         {
           cache: 'no-store',
           headers: {
@@ -260,7 +259,7 @@ export async function measureUploadSpeed(
   }
   // Return average speed
   const avgSpeed = speeds.reduce((a, b) => a + b, 0) / speeds.length;
-  return Math.round(avgSpeed * 10) / 1024;
+  return Math.round(avgSpeed * 10) / 1000;
 }
 
 /**
